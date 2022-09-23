@@ -5,6 +5,9 @@ import by.dobrodey.user_app.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class stores users
+ */
 public class AllUsers {
 
     private static List<User> AllUsers;
@@ -18,6 +21,11 @@ public class AllUsers {
     private AllUsers() {
     }
 
+    /**
+     * Giving list of all users
+     *
+     * @return list of users
+     */
     public static List<User> getAllUsers() {
         if (AllUsers == null) {
             synchronized (AllUsers.class) {

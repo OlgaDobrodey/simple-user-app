@@ -18,6 +18,14 @@ public class UserServlet extends HttpServlet {
 
     final private String FIRST_NAME = "firstName";
     final private String LAST_NAME = "lastName";
+    final private String USER_ID = "userId";
+    final private String USER_NO_FOUND_MESSAGE = "User not found";
+    final private String JSP_PAGE = "/index.jsp";
+    final private String DELETE_ALL_ACTION = "/deleteAll";
+    final private String LIST_OF_USERS_ACTION = "/users";
+    final private String ADD_USER_ACTION = "/add";
+    final private String DELETE_USER_ACTION = "/delete";
+    final private String GET_USER_ACTION = "/get";
 
     private UserDao userDao;
 
@@ -26,19 +34,27 @@ public class UserServlet extends HttpServlet {
         userDao = new UserDaoImpl();
     }
 
+    /**
+     * Performs actions on the user (delete all and show a list of all users)
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getServletPath();
         switch (action) {
-            case "/deleteAll":
+            case DELETE_ALL_ACTION:
                 deleteAll(request);
                 break;
-            case "/users":
+            case LIST_OF_USERS_ACTION:
                 findAll(request);
                 break;
         }
 
-        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher(JSP_PAGE).forward(request, response);
     }
 
     private void findAll(HttpServletRequest req) {
@@ -51,28 +67,38 @@ public class UserServlet extends HttpServlet {
         findAll(req);
     }
 
+
+    /**
+     * Performs actions on the user
+     * (add user, get and delete user by id)
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getServletPath();
         switch (action) {
-            case "/add":
+            case ADD_USER_ACTION:
                 create(request);
                 break;
-            case "/get":
+            case GET_USER_ACTION:
                 getUser(request);
                 break;
-            case "/delete":
+            case DELETE_USER_ACTION:
                 deleteUser(request);
                 break;
         }
-        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher(JSP_PAGE).forward(request, response);
     }
 
     private void getUser(HttpServletRequest req) {
-        Optional<User> user = userDao.findById(Integer.parseInt(req.getParameter("userId")));
+        Optional<User> user = userDao.findById(Integer.parseInt(req.getParameter(USER_ID)));
 
         if (user.isPresent()) req.setAttribute("user", user.get());
-        else req.setAttribute("user", "User not found");
+        else req.setAttribute("user", USER_NO_FOUND_MESSAGE);
     }
 
     private void create(HttpServletRequest req) {
@@ -82,7 +108,7 @@ public class UserServlet extends HttpServlet {
     }
 
     private void deleteUser(HttpServletRequest req) {
-        userDao.deleteById(Integer.parseInt(req.getParameter("userId")));
+        userDao.deleteById(Integer.parseInt(req.getParameter(USER_ID)));
         findAll(req);
     }
 }
