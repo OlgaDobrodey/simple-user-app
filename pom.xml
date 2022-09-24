@@ -16,8 +16,8 @@
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <maven.tomcat.url>http://localhost:8080/manager/text</maven.tomcat.url>
-        <maven.tomcat.server>TomcatServer10</maven.tomcat.server>
+        <maven.tomcat.url>http://localhost:8086/manager/text</maven.tomcat.url>
+        <maven.tomcat.server>Ubuntu</maven.tomcat.server>
         <maven.tomcat.path>/${project.name}</maven.tomcat.path>
     </properties>
 
