@@ -35,6 +35,8 @@
                         <td> ${user.getId()} </td>
                         <td> ${user.getFirstName()}</td>
                         <td> ${user.getLastName()}</td>
+                        <td>${user.getEmail()}</td>
+                        <td>${user.getDateOfBirth()}</td>
                         <td>
                             <form action="delete" method="post">
                                 <input hidden name="userId" value="${user.getId()}"/>
@@ -57,6 +59,10 @@
                 <input type="text" id="first" name="firstName" value="" required><br><br>
                 <label for="last">Last Name:</label>
                 <input type="text" id="last" name="lastName" value="" required><br><br>
+                <label for="last">EmaiL:</label>
+                <input type="email" id="email" name="email" value="" required><br><br>
+                <label for="last">Date Of Birth:</label>
+                <input type="date" id="date" name="date" value="" required><br><br>
                 <button type="submit">Add User</button>
                 <br><br>
             </form>
@@ -76,6 +82,8 @@
                             <td> ${user.getId()}</td>
                             <td> ${user.getFirstName()}</td>
                             <td> ${user.getLastName()}</td>
+                            <td>${user.getEmail()}</td>
+                            <td>${user.getDateOfBirth()}</td>
                         </tr>
                     </table>
 
