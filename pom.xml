@@ -55,6 +55,13 @@
             <artifactId>flyway-core</artifactId>
             <version>9.3.0</version>
         </dependency>
+<!--        added cglib for proxy class-->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

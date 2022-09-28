@@ -3,6 +3,7 @@ package by.dobrodey.user_app.dao.impl;
 import by.dobrodey.user_app.dao.UserDao;
 import by.dobrodey.user_app.model.Role;
 import by.dobrodey.user_app.model.User;
+import by.dobrodey.user_app.proxy.UserProxy;
 import lombok.AllArgsConstructor;
 
 import javax.sql.DataSource;
@@ -157,7 +158,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     private User getUser(ResultSet resultSet) throws SQLException {
-        User user = new User();
+        User user = new UserProxy().contextInitialized();
         user.setId(resultSet.getInt(ID_USER_COLUMN));
         user.setFirstName(resultSet.getString(FIRST_NAME_USER_COLUMN));
         user.setLastName(resultSet.getString(LAST_NAME_USER_COLUMN));
