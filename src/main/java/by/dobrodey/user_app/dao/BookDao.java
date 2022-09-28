@@ -10,7 +10,7 @@ public interface BookDao {
 
     List<Book> findAll() throws SQLException;
     Optional<Book> findById(Integer id) throws SQLException;
-    List<Optional<Book>> findAllBookByUserId(Integer idUser) throws SQLException;
+    List<Book> findAllBookByUserId(Integer idUser) throws SQLException;
 
 
 }

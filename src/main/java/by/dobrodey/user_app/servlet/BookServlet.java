@@ -17,7 +17,7 @@ import java.util.Optional;
 @WebServlet(name = "bookServlet", urlPatterns = "/books")
 public class BookServlet extends HttpServlet {
 
-    final private String BOOK_ID = "userId";
+    final private String BOOK_ID = "bookId";
     final private String BOOK_NO_FOUND_MESSAGE = "Book not found";
     final private String BOOK_JSP_PAGE = "/book.jsp";
 
@@ -49,9 +49,11 @@ public class BookServlet extends HttpServlet {
     @SneakyThrows
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Book> book = bookDao.findById(Integer.parseInt(request.getParameter(BOOK_ID)));
+        request.setAttribute("listBooks", bookDao.findAll());
 
-        if (book.isPresent()) request.setAttribute("book", book.get());
-        else request.setAttribute("book", BOOK_NO_FOUND_MESSAGE);
+        if (book.isPresent()) {
+            request.setAttribute("book", book.get());
+        } else request.setAttribute("book", BOOK_NO_FOUND_MESSAGE);
         getServletContext().getRequestDispatcher(BOOK_JSP_PAGE).forward(request, response);
     }
 }

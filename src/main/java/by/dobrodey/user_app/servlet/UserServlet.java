@@ -1,8 +1,10 @@
 package by.dobrodey.user_app.servlet;
 
 import by.dobrodey.user_app.dao.BookDao;
+import by.dobrodey.user_app.dao.RoleDao;
 import by.dobrodey.user_app.dao.UserDao;
 import by.dobrodey.user_app.dao.impl.BookDaoImpl;
+import by.dobrodey.user_app.dao.impl.RoleDaoImpl;
 import by.dobrodey.user_app.dao.impl.UserDaoImpl;
 import by.dobrodey.user_app.data.BaseConnection;
 import by.dobrodey.user_app.model.Book;
@@ -31,21 +33,24 @@ public class UserServlet extends HttpServlet {
     final private String DATE_OF_BIRTH = "date";
     final private String USER_NO_FOUND_MESSAGE = "User not found";
     final private String NO_FOUND_BOOK_FOR_USER_MESSAGE = "No found book for user";
-    final private String JSP_PAGE = "/index.jsp";
+    final private String USER_JSP_PAGE = "/user.jsp";
+    final private String USER_BOOK_JSP_PAGE = "/usersBooks.jsp";
     final private String DELETE_ALL_ACTION = "/deleteAll";
     final private String LIST_OF_USERS_ACTION = "/users";
     final private String ADD_USER_ACTION = "/add";
     final private String DELETE_USER_ACTION = "/delete";
     final private String GET_USER_ACTION = "/get";
-    final private String ALL_BOOK_BY_USER_ID_ACTION = "/get/books";
+    final private String ALL_BOOK_BY_USER_ID_ACTION = "/userBooks";
 
     private UserDao userDao;
     private BookDao bookDao;
+    private RoleDao roleDao;
 
     @Override
-    public void init() throws ServletException {
+    public void init(){
         userDao = new UserDaoImpl(BaseConnection.getInstance());
         bookDao = new BookDaoImpl(BaseConnection.getInstance());
+        roleDao = new RoleDaoImpl(BaseConnection.getInstance());
     }
 
     /**
@@ -69,7 +74,12 @@ public class UserServlet extends HttpServlet {
                 break;
         }
 
-        getServletContext().getRequestDispatcher(JSP_PAGE).forward(request, response);
+        setRoleList(request);
+        getServletContext().getRequestDispatcher(USER_JSP_PAGE).forward(request, response);
+    }
+
+    private void setRoleList(HttpServletRequest request) throws SQLException {
+        request.setAttribute("roleList", roleDao.findAll());
     }
 
     private void findAll(HttpServletRequest req) throws SQLException {
@@ -110,7 +120,10 @@ public class UserServlet extends HttpServlet {
                 break;
 
         }
-        getServletContext().getRequestDispatcher(JSP_PAGE).forward(request, response);
+        setRoleList(request);
+        if (action.equals(ALL_BOOK_BY_USER_ID_ACTION)) {
+            getServletContext().getRequestDispatcher(USER_BOOK_JSP_PAGE).forward(request, response);
+        } else getServletContext().getRequestDispatcher(USER_JSP_PAGE).forward(request, response);
     }
 
     private void getUser(HttpServletRequest req) throws SQLException {
@@ -121,21 +134,21 @@ public class UserServlet extends HttpServlet {
     }
 
     private void getAllBookByUser(HttpServletRequest request) throws SQLException {
-        List<Optional<Book>> listBooks = bookDao.findAllBookByUserId(Integer.parseInt(request.getParameter(USER_ID)));
+        Optional<User> user = userDao.findById(Integer.parseInt(request.getParameter(USER_ID)));
+        if (user.isPresent()) {
+            List<Book> listBooks = bookDao.findAllBookByUserId(Integer.parseInt(request.getParameter(USER_ID)));
+            if (listBooks.size() != 0) request.setAttribute("bookList", listBooks);
+            else request.setAttribute("bookList", NO_FOUND_BOOK_FOR_USER_MESSAGE);
+            request.setAttribute("user", user.get());
+        }
 
-        if (listBooks.size() != 0) request.setAttribute("bookList", listBooks);
-        else request.setAttribute("bookList", NO_FOUND_BOOK_FOR_USER_MESSAGE);
     }
 
     private void create(HttpServletRequest req) throws SQLException {
-        User user = User.builder()
-                .firstName(req.getParameter(FIRST_NAME))
-                .lastName(req.getParameter(LAST_NAME))
-                .email(req.getParameter(EMAIL))
-                .dateOfBirth(LocalDate.parse(req.getParameter(DATE_OF_BIRTH)))
-                .build();
+        User user = User.builder().firstName(req.getParameter(FIRST_NAME)).lastName(req.getParameter(LAST_NAME)).email(req.getParameter(EMAIL)).dateOfBirth(LocalDate.parse(req.getParameter(DATE_OF_BIRTH))).build();
         userDao.save(user);
         findAll(req);
+        req.setAttribute("MessageUser", "User Add");
     }
 
     private void deleteUser(HttpServletRequest req) throws SQLException {

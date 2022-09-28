@@ -35,6 +35,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Method find all book in library
+     *
      * @return list of books and list empty - if library doesn't have books
      * @throws SQLException
      */
@@ -65,6 +66,7 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * Fond book for id
+     *
      * @param id - id book
      * @return Optional book for id
      * @throws SQLException
@@ -91,20 +93,21 @@ public class BookDaoImpl implements BookDao {
 
     /**
      * find all book for user by id
+     *
      * @param userId
-     * @return List<Optional <Book>
+     * @return List<Optional < Book>
      * @throws SQLException
      */
     @Override
-    public List<Optional<Book>> findAllBookByUserId(Integer userId) throws SQLException {
-        List<Optional<Book>> books = new ArrayList<>();
+    public List<Book> findAllBookByUserId(Integer userId) throws SQLException {
+        List<Book> books = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              Statement stm = conn.createStatement();
              ResultSet resultSet = stm.executeQuery(SELECT_ALL_BOOKS_FOR_USER + userId)) {
 
             while (resultSet.next()) {
                 Optional<Book> book = findById(resultSet.getInt(CROSS_TABLE_ID_BOOK));
-                books.add(book);
+                book.ifPresent(books::add);
             }
         } catch (SQLException ex) {
             throw new SQLException("ERROR: SELECT ALL BOOK FOR USER: ", ex);
