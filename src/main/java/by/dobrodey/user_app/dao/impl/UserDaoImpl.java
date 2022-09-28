@@ -3,6 +3,7 @@ package by.dobrodey.user_app.dao.impl;
 import by.dobrodey.user_app.dao.UserDao;
 import by.dobrodey.user_app.model.Role;
 import by.dobrodey.user_app.model.User;
+import lombok.AllArgsConstructor;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Class consist methods for work model User
+ */
+@AllArgsConstructor
 public class UserDaoImpl implements UserDao {
 
     private static final String ID_USER_COLUMN = "id";
@@ -29,7 +34,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SELECT_ALL_QUERY =
             "SELECT users.id, users.first_name, users.last_name, users.email ,users.date_of_birth, users.role_id, role.role_name " +
                     "FROM users join role on role.id = users.role_id";
-    private static final String SELECT_USER_BY_ID_QUERY = SELECT_ALL_QUERY+ " WHERE  users.id = ";
+    private static final String SELECT_USER_BY_ID_QUERY = SELECT_ALL_QUERY + " WHERE  users.id = ";
     private static final String INSERT_USER_QUERY = "INSERT INTO users(first_name, last_name, email, date_of_birth, role_id) VALUES (?,?,?,?,?)";
     private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
     private static final String DELETE_USER_BOOK_QUERY = "DELETE FROM users_book WHERE users_id = ?";
@@ -37,10 +42,6 @@ public class UserDaoImpl implements UserDao {
     private static final String DELETE_ALL_USERS_FROM_USERS_BOOK = "DELETE FROM users_book";
 
     private final DataSource dataSource;
-
-    public UserDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Override
     public User save(User user) throws SQLException {
@@ -50,8 +51,9 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setDate(4, Date.valueOf(user.getDateOfBirth()));
-           if(user.getRole()==null){
-               user.setRole(Role.getDefaultRole());}
+            if (user.getRole() == null) {
+                user.setRole(Role.getDefaultRole());
+            }
             preparedStatement.setInt(5, user.getRole().getRoleId());
 
             int effectiveRows = preparedStatement.executeUpdate();

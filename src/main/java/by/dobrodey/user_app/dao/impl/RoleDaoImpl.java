@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Class consist methods for model Role
+ */
 @AllArgsConstructor
 public class RoleDaoImpl implements RoleDao {
 

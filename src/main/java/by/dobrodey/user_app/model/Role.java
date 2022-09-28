@@ -26,6 +26,12 @@ public class Role {
     private static final Integer ID_DEFAULT_ROLE = 2;
     private static final String NAME_DEFAULT_ROLE = "USER";
 
+    /**
+     * Get default role for this date base:
+     * id_role = 2;
+     * name_role = "User"
+     * @return Role
+     */
     public static Role getDefaultRole(){
         return Role.builder()
                 .roleId(ID_DEFAULT_ROLE)

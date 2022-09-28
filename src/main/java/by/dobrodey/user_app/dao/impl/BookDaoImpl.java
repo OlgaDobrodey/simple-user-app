@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Class consist on methods for work with model Book
+ */
 @AllArgsConstructor
 public class BookDaoImpl implements BookDao {
 
@@ -30,6 +33,11 @@ public class BookDaoImpl implements BookDao {
 
     private final DataSource dataSource;
 
+    /**
+     * Method find all book in library
+     * @return list of books and list empty - if library doesn't have books
+     * @throws SQLException
+     */
     @Override
     public List<Book> findAll() throws SQLException {
         List<Book> books = new ArrayList<>();
@@ -55,6 +63,12 @@ public class BookDaoImpl implements BookDao {
                 .build();
     }
 
+    /**
+     * Fond book for id
+     * @param id - id book
+     * @return Optional book for id
+     * @throws SQLException
+     */
     @Override
     public Optional<Book> findById(Integer id) throws SQLException {
         Book book = null;
@@ -75,6 +89,12 @@ public class BookDaoImpl implements BookDao {
         return Optional.ofNullable(book);
     }
 
+    /**
+     * find all book for user by id
+     * @param userId
+     * @return List<Optional <Book>
+     * @throws SQLException
+     */
     @Override
     public List<Optional<Book>> findAllBookByUserId(Integer userId) throws SQLException {
         List<Optional<Book>> books = new ArrayList<>();

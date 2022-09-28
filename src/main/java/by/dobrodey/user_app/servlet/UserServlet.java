@@ -1,9 +1,11 @@
 package by.dobrodey.user_app.servlet;
 
+import by.dobrodey.user_app.dao.BookDao;
 import by.dobrodey.user_app.dao.UserDao;
+import by.dobrodey.user_app.dao.impl.BookDaoImpl;
 import by.dobrodey.user_app.dao.impl.UserDaoImpl;
 import by.dobrodey.user_app.data.BaseConnection;
-import by.dobrodey.user_app.model.Role;
+import by.dobrodey.user_app.model.Book;
 import by.dobrodey.user_app.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,18 +30,22 @@ public class UserServlet extends HttpServlet {
     final private String EMAIL = "email";
     final private String DATE_OF_BIRTH = "date";
     final private String USER_NO_FOUND_MESSAGE = "User not found";
+    final private String NO_FOUND_BOOK_FOR_USER_MESSAGE = "No found book for user";
     final private String JSP_PAGE = "/index.jsp";
     final private String DELETE_ALL_ACTION = "/deleteAll";
     final private String LIST_OF_USERS_ACTION = "/users";
     final private String ADD_USER_ACTION = "/add";
     final private String DELETE_USER_ACTION = "/delete";
     final private String GET_USER_ACTION = "/get";
+    final private String ALL_BOOK_BY_USER_ID_ACTION = "/get/books";
 
     private UserDao userDao;
+    private BookDao bookDao;
 
     @Override
     public void init() throws ServletException {
         userDao = new UserDaoImpl(BaseConnection.getInstance());
+        bookDao = new BookDaoImpl(BaseConnection.getInstance());
     }
 
     /**
@@ -76,7 +82,6 @@ public class UserServlet extends HttpServlet {
         findAll(req);
     }
 
-
     /**
      * Performs actions on the user
      * (add user, get and delete user by id)
@@ -100,6 +105,10 @@ public class UserServlet extends HttpServlet {
             case DELETE_USER_ACTION:
                 deleteUser(request);
                 break;
+            case ALL_BOOK_BY_USER_ID_ACTION:
+                getAllBookByUser(request);
+                break;
+
         }
         getServletContext().getRequestDispatcher(JSP_PAGE).forward(request, response);
     }
@@ -109,6 +118,13 @@ public class UserServlet extends HttpServlet {
 
         if (user.isPresent()) req.setAttribute("user", user.get());
         else req.setAttribute("user", USER_NO_FOUND_MESSAGE);
+    }
+
+    private void getAllBookByUser(HttpServletRequest request) throws SQLException {
+        List<Optional<Book>> listBooks = bookDao.findAllBookByUserId(Integer.parseInt(request.getParameter(USER_ID)));
+
+        if (listBooks.size() != 0) request.setAttribute("bookList", listBooks);
+        else request.setAttribute("bookList", NO_FOUND_BOOK_FOR_USER_MESSAGE);
     }
 
     private void create(HttpServletRequest req) throws SQLException {
