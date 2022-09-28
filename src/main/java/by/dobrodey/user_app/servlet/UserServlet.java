@@ -8,6 +8,7 @@ import by.dobrodey.user_app.dao.impl.RoleDaoImpl;
 import by.dobrodey.user_app.dao.impl.UserDaoImpl;
 import by.dobrodey.user_app.data.BaseConnection;
 import by.dobrodey.user_app.model.Book;
+import by.dobrodey.user_app.model.Role;
 import by.dobrodey.user_app.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -47,7 +48,7 @@ public class UserServlet extends HttpServlet {
     private RoleDao roleDao;
 
     @Override
-    public void init(){
+    public void init() {
         userDao = new UserDaoImpl(BaseConnection.getInstance());
         bookDao = new BookDaoImpl(BaseConnection.getInstance());
         roleDao = new RoleDaoImpl(BaseConnection.getInstance());
@@ -145,7 +146,14 @@ public class UserServlet extends HttpServlet {
     }
 
     private void create(HttpServletRequest req) throws SQLException {
-        User user = User.builder().firstName(req.getParameter(FIRST_NAME)).lastName(req.getParameter(LAST_NAME)).email(req.getParameter(EMAIL)).dateOfBirth(LocalDate.parse(req.getParameter(DATE_OF_BIRTH))).build();
+        Optional<Role> role = roleDao.findById(Integer.parseInt(req.getParameter(ROLE)));
+        User user = User.builder()
+                .firstName(req.getParameter(FIRST_NAME))
+                .lastName(req.getParameter(LAST_NAME))
+                .email(req.getParameter(EMAIL))
+                .dateOfBirth(LocalDate.parse(req.getParameter(DATE_OF_BIRTH)))
+                .role(role.get())
+                .build();
         userDao.save(user);
         findAll(req);
         req.setAttribute("MessageUser", "User Add");
