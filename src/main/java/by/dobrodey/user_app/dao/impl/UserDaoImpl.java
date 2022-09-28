@@ -1,6 +1,7 @@
 package by.dobrodey.user_app.dao.impl;
 
 import by.dobrodey.user_app.dao.UserDao;
+import by.dobrodey.user_app.model.Role;
 import by.dobrodey.user_app.model.User;
 
 import javax.sql.DataSource;
@@ -22,16 +23,20 @@ public class UserDaoImpl implements UserDao {
     private static final String LAST_NAME_USER_COLUMN = "last_name";
     private static final String EMAIL_COLUMN = "email";
     private static final String DATE_OF_BIRTH = "date_of_birth";
+    private static final String ROLE_USER_COLUMN = "role_id";
+    private static final String ROLE_NAME_TABLE_ROLE = "role_name";
 
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
-    private static final String SELECT_USER_BY_ID_QUERY = "SELECT * FROM users where  id = ";
-    private static final String INSERT_USER_QUERY = "INSERT INTO users(first_name, last_name, email, date_of_birth) VALUES (?,?,?,?)";
+    private static final String SELECT_ALL_QUERY =
+            "SELECT users.id, users.first_name, users.last_name, users.email ,users.date_of_birth, users.role_id, role.role_name " +
+                    "FROM users join role on role.id = users.role_id";
+    private static final String SELECT_USER_BY_ID_QUERY = SELECT_ALL_QUERY+ " WHERE  users.id = ";
+    private static final String INSERT_USER_QUERY = "INSERT INTO users(first_name, last_name, email, date_of_birth, role_id) VALUES (?,?,?,?,?)";
     private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
     private static final String DELETE_USER_BOOK_QUERY = "DELETE FROM users_book WHERE users_id = ?";
     private static final String DELETE_ALL_QUERY = "DELETE FROM users";
     private static final String DELETE_ALL_USERS_FROM_USERS_BOOK = "DELETE FROM users_book";
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public UserDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -45,6 +50,9 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setDate(4, Date.valueOf(user.getDateOfBirth()));
+           if(user.getRole()==null){
+               user.setRole(Role.getDefaultRole());}
+            preparedStatement.setInt(5, user.getRole().getRoleId());
 
             int effectiveRows = preparedStatement.executeUpdate();
             if (effectiveRows == 1) {
@@ -153,6 +161,11 @@ public class UserDaoImpl implements UserDao {
         user.setLastName(resultSet.getString(LAST_NAME_USER_COLUMN));
         user.setEmail(resultSet.getString(EMAIL_COLUMN));
         user.setDateOfBirth(resultSet.getDate(DATE_OF_BIRTH).toLocalDate());
+        Role role = Role.builder()
+                .roleId(resultSet.getInt(ROLE_USER_COLUMN))
+                .roleName(resultSet.getString(ROLE_NAME_TABLE_ROLE))
+                .build();
+        user.setRole(role);
 
         return user;
     }
