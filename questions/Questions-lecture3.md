@@ -46,4 +46,4 @@
 - ProductID	ProductName	SupplierID	CategoryID	Unit	Price
 - Найти РОдукты которые стоят в больше 20, но меньше 22 
 
-SELECT ProductName, Price From Products Where Price Between 20 and 22;
+**SELECT** ProductName, Price **From** Products **Where** Price **Between** 20 and 22;
