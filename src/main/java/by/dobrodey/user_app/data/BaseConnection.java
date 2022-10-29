@@ -2,6 +2,8 @@ package by.dobrodey.user_app.data;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import javax.sql.DataSource;
 
@@ -13,6 +15,7 @@ import static by.dobrodey.user_app.data.Properties.USER;
 public class BaseConnection {
 
     private static DataSource dataSource;
+    private static SessionFactory sessionFactory;
     private static HikariConfig config = new HikariConfig();
 
     private BaseConnection() {
@@ -28,6 +31,17 @@ public class BaseConnection {
             }
         }
         return dataSource;
+    }
+
+    public static SessionFactory getInstanceHibernate() {
+        if (sessionFactory == null) {
+            synchronized (BaseConnection.class) {
+                if (sessionFactory == null) {
+                    sessionFactory = new Configuration().configure().buildSessionFactory();
+                }
+            }
+        }
+        return sessionFactory;
     }
 
     private static DataSource getDataSource() {

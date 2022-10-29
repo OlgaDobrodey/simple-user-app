@@ -3,9 +3,9 @@ package by.dobrodey.user_app.servlet;
 import by.dobrodey.user_app.dao.BookDao;
 import by.dobrodey.user_app.dao.RoleDao;
 import by.dobrodey.user_app.dao.UserDao;
-import by.dobrodey.user_app.dao.impl.BookDaoImpl;
-import by.dobrodey.user_app.dao.impl.RoleDaoImpl;
-import by.dobrodey.user_app.dao.impl.UserDaoImpl;
+import by.dobrodey.user_app.dao.impl.hibernate.BookDaoHibernateImpl;
+import by.dobrodey.user_app.dao.impl.hibernate.RoleDaoHibernateImpl;
+import by.dobrodey.user_app.dao.impl.hibernate.UserDaoHibernateImpl;
 import by.dobrodey.user_app.data.BaseConnection;
 import by.dobrodey.user_app.model.Book;
 import by.dobrodey.user_app.model.Role;
@@ -49,9 +49,9 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void init() {
-        userDao = new UserDaoImpl(BaseConnection.getInstance());
-        bookDao = new BookDaoImpl(BaseConnection.getInstance());
-        roleDao = new RoleDaoImpl(BaseConnection.getInstance());
+        userDao = new UserDaoHibernateImpl(BaseConnection.getInstanceHibernate());
+        bookDao = new BookDaoHibernateImpl(BaseConnection.getInstanceHibernate());
+        roleDao = new RoleDaoHibernateImpl(BaseConnection.getInstanceHibernate());
     }
 
     /**

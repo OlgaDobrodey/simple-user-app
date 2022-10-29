@@ -6,16 +6,31 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.List;
+
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
+@Entity
+@Table(schema = "library", name = "book")
 public class Book {
 
+    @Id
+    @Column(name = "id")
     private Integer bookId;
     private String title;
+    @Column(name = "writer")
     private String author;
+
+    @ManyToMany(mappedBy = "bookList")
+    private List<User> users;
 
     @Override
     public String toString() {

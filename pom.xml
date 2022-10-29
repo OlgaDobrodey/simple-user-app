@@ -16,8 +16,8 @@
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <maven.tomcat.url>http://192.168.56.102:8085/manager/text</maven.tomcat.url>
-        <maven.tomcat.server>Ubuntu</maven.tomcat.server>
+        <maven.tomcat.url>http://localhost:8080/manager/text</maven.tomcat.url>
+        <maven.tomcat.server>TomcatServer10</maven.tomcat.server>
         <maven.tomcat.path>/${project.name}</maven.tomcat.path>
     </properties>
 
@@ -60,6 +60,11 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.0.Final</version>
         </dependency>
 
     </dependencies>

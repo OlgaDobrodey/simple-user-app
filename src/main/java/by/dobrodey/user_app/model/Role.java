@@ -7,15 +7,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@Entity
+@Table(schema = "library", name = "role")
 public class Role {
 
+    @Id
+    @Column(name = "id")
     private Integer roleId;
+    @Column(name = "role_name")
     private String roleName;
 
     @Override
