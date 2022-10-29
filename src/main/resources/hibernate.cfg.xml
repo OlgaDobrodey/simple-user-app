@@ -9,6 +9,7 @@
         <property name="connection.username">library</property>
         <property name="connection.password">library</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+        <property name="hibernate.jdbc.batch_size">100</property>
 <!--        <property name="show_sql">true</property>-->
 <!--        <property name="format_sql">true</property>-->
 

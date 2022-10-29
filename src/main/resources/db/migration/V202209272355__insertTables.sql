@@ -14,11 +14,11 @@ VALUES ('Petrov', 'Petrov', 1, 'Petr@mail.ru', '2011-12-01'),
        ('Kurgan', 'Kurgan', 1, 'Misha@mail.ru', '2011-12-01'),
        ('Leurdo', 'Leurdo', 1, 'Elena@mail.ru', '2011-12-01');
 
-INSERT INTO book(title, writer)
-VALUES ('Red book', 'Author1'),
-       ('Green book', 'Author2'),
-       ('Blue book', 'Author3'),
-       ('Black book', 'Author4');
+INSERT INTO book(title, writer,pages)
+VALUES ('Red book', 'Author1',100),
+       ('Green book', 'Author2',200),
+       ('Blue book', 'Author3',300),
+       ('Black book', 'Author4',400);
 
 INSERT INTO users_book(users_id, book_id)
 VALUES (1, 1),

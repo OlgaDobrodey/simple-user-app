@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS book
     id     SERIAL      NOT NULL,
     title  VARCHAR(50) NOT NULL,
     writer VARCHAR(50) NOT NULL,
+    pages INT NOT NULL ,
     CONSTRAINT book_pkey PRIMARY KEY (id)
 );
 

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -24,10 +26,13 @@ public class Book {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookId;
     private String title;
     @Column(name = "writer")
     private String author;
+    @Column
+    private Integer pages;
 
     @ManyToMany(mappedBy = "bookList")
     private List<User> users;
@@ -38,6 +43,7 @@ public class Book {
                 "bookId=" + bookId +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", pages='" + pages + '\'' +
                 '}';
     }
 }

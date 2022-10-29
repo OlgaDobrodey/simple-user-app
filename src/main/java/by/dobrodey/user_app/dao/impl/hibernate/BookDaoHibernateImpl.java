@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ public class BookDaoHibernateImpl implements BookDao {
     private static final String USER_ID = "userId";
     private static final String SELECT_ALL_QUERY = "from Book b";
     private static final String SELECT_ALL_BOOKS_FOR_USER = "select b from User u join u.bookList b where u.id =:userId";
+    private static final String SELECT_ALL_BOOKS_BY_PAGES_MORE = "from Book b where b.pages > ";
 
     private final SessionFactory sessionFactory;
 
@@ -27,7 +30,7 @@ public class BookDaoHibernateImpl implements BookDao {
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            List<Book> books = session.createQuery(SELECT_ALL_QUERY, Book.class).list();
+            List<Book> books = session.createQuery(SELECT_ALL_QUERY, Book.class).setMaxResults(10).list();
             transaction.commit();
             return books;
         }
@@ -64,6 +67,41 @@ public class BookDaoHibernateImpl implements BookDao {
                     .getResultList();
             transaction.commit();
             return books;
+        }
+    }
+
+    @Override
+    public List<Book> findAllBookWhereCountPagesMore(Integer pages) {
+
+        try (Session session = sessionFactory.openSession()) {
+            Date finishLinked = new Date();
+            Transaction transaction = session.beginTransaction();
+            int count = count();
+            int i = 0;
+            List<Book> books = new LinkedList<>();
+            while (i <= count) {
+                Date finishLinked1 = new Date();
+                books.addAll(session.createQuery(SELECT_ALL_BOOKS_BY_PAGES_MORE + pages, Book.class)
+                        .setFirstResult(i).setMaxResults(i + 99999).list());
+                session.clear();
+
+                i += 100000;
+                System.out.println("==================== " + i + " ===============");
+                System.out.println(new Date().getTime()-finishLinked1.getTime());
+            }
+            transaction.commit();
+            Date endLinked = new Date();
+            System.out.println(endLinked.getTime() - finishLinked.getTime());
+            return books;
+        }
+    }
+
+    private int count() {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Long count = (Long) session.createQuery("select count(*) from Book b").list().get(0);
+            transaction.commit();
+            return Math.toIntExact(count);
         }
     }
 }

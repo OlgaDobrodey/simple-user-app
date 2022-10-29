@@ -18,6 +18,7 @@ import java.util.Optional;
  * Class consist on methods for work with model Book
  */
 @AllArgsConstructor
+@Deprecated
 public class BookDaoImpl implements BookDao {
 
     private static final String ID_BOOK_COLUMN = "id";
@@ -113,6 +114,11 @@ public class BookDaoImpl implements BookDao {
             throw new SQLException("ERROR: SELECT ALL BOOK FOR USER: ", ex);
         }
         return books;
+    }
+
+    @Override
+    public List<Book> findAllBookWhereCountPagesMore(Integer pages) {
+        return null;
     }
 }
 

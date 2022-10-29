@@ -25,12 +25,14 @@
             <th>ID</th>
             <th> TITLE</th>
             <th> AUTHOR</th>
+            <th> PAGES</th>
         </tr>
         <c:forEach var="book" items="${listBooks}">
             <tr>
                 <td>${book.getBookId()}</td>
                 <td>${book.getTitle()}</td>
                 <td>${book.getAuthor()}</td>
+                <td>${book.getPages()}</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -54,6 +56,7 @@
                                 <td> ${book.getBookId()}</td>
                                 <td> ${book.getTitle()}</td>
                                 <td> ${book.getAuthor()}</td>
+                                <td> ${book.getPages()}</td>
                             </tr>
                         </table>
 

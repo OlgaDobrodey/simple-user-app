@@ -4,12 +4,9 @@ import by.dobrodey.user_app.dao.BookDao;
 import by.dobrodey.user_app.dao.RoleDao;
 import by.dobrodey.user_app.dao.UserDao;
 import by.dobrodey.user_app.dao.impl.hibernate.BookDaoHibernateImpl;
-import by.dobrodey.user_app.dao.impl.hibernate.RoleDaoHibernateImpl;
-import by.dobrodey.user_app.dao.impl.hibernate.UserDaoHibernateImpl;
 import by.dobrodey.user_app.data.BaseConnection;
 import by.dobrodey.user_app.model.User;
 import by.dobrodey.user_app.service.FlywayService;
-import org.hibernate.SessionFactory;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,31 +17,31 @@ public class Main {
         FlywayService flywayService = new FlywayService();
 ////        flywayService.clean();
         flywayService.migrate();
-        SessionFactory sessionFactory = BaseConnection.getInstanceHibernate();
-
-        System.out.println("=================ABOUT ROLE==================");
-        RoleDao roleDao = new RoleDaoHibernateImpl(BaseConnection.getInstanceHibernate());
-        role(roleDao);
-
-        System.out.println("==================ABOUT BOOK==============================");
+//
+//        System.out.println("=================ABOUT ROLE==================");
+//        RoleDao roleDao = new RoleDaoHibernateImpl(BaseConnection.getInstanceHibernate());
+//        role(roleDao);
+//
+//        System.out.println("==================ABOUT BOOK==============================");
         BookDao bookDao = new BookDaoHibernateImpl(BaseConnection.getInstanceHibernate());
         books(bookDao);
-        System.out.println("==================ABOUT USER==============================");
-        UserDao userRepository = new UserDaoHibernateImpl(BaseConnection.getInstanceHibernate());
-
-        findUsers(userRepository);
-        saveUsers(userRepository);
-        deleteUsers(userRepository);
+//        System.out.println("==================ABOUT USER==============================");
+//        UserDao userRepository = new UserDaoHibernateImpl(BaseConnection.getInstanceHibernate());
+//
+//        findUsers(userRepository);
+//        saveUsers(userRepository);
+//        deleteUsers(userRepository);
 //
 
     }
 
-    private static void books(BookDao bookDao) throws SQLException{
+    private static void books(BookDao bookDao) throws SQLException {
         System.out.println("FInd All roles: " + bookDao.findAll());
         System.out.println("Find book by id1: " + bookDao.findById(1));
         System.out.println("Find book by id20: " + bookDao.findById(20));
         System.out.println(bookDao.findAllBookByUserId(10));
         System.out.println(bookDao.findAllBookByUserId(100));
+        bookDao.findAllBookWhereCountPagesMore(100);
     }
 
     private static void role(RoleDao roleDao) throws SQLException {
@@ -78,7 +75,7 @@ public class Main {
         System.out.println("After add new user" + userRepository.findAll());
     }
 
-    private static void findUsers(UserDao userRepository)  throws SQLException {
+    private static void findUsers(UserDao userRepository) throws SQLException {
         System.out.println("Find All " + userRepository.findAll());
         System.out.println("Find by id = 1 " + userRepository.findById(1));
         System.out.println("Find by id = 100 " + userRepository.findById(100));
