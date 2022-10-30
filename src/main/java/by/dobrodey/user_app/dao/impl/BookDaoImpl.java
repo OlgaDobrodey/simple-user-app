@@ -24,6 +24,7 @@ public class BookDaoImpl implements BookDao {
     private static final String ID_BOOK_COLUMN = "id";
     private static final String TITLE_BOOK_COLUMN = "title";
     private static final String WRITER_BOOK_COLUMN = "writer";
+    private static final String PAGES_BOOK_COLUMN = "pages";
     private static final String CROSS_TABLE_ID_BOOK = "book_id";
 
     private static final String SELECT_ALL_QUERY = "SELECT * FROM book";
@@ -58,11 +59,13 @@ public class BookDaoImpl implements BookDao {
     }
 
     private Book getBook(ResultSet resultSet) throws SQLException {
-        return Book.builder()
-                .bookId(resultSet.getInt(ID_BOOK_COLUMN))
-                .author(resultSet.getString(WRITER_BOOK_COLUMN))
-                .title(resultSet.getString(TITLE_BOOK_COLUMN))
-                .build();
+        final Book book = new Book();
+        book.setId(resultSet.getInt(ID_BOOK_COLUMN));
+        book.setPages(resultSet.getInt(PAGES_BOOK_COLUMN));
+        book.setAuthor(resultSet.getString(WRITER_BOOK_COLUMN));
+        book.setTitle(resultSet.getString(TITLE_BOOK_COLUMN));
+
+        return book;
     }
 
     /**

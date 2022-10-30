@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
             if (user.getRole() == null) {
                 user.setRole(Role.getDefaultRole());
             }
-            preparedStatement.setInt(5, user.getRole().getRoleId());
+            preparedStatement.setInt(5, user.getRole().getId());
 
             int effectiveRows = preparedStatement.executeUpdate();
             if (effectiveRows == 1) {
@@ -165,7 +165,7 @@ public class UserDaoImpl implements UserDao {
         user.setEmail(resultSet.getString(EMAIL_COLUMN));
         user.setDateOfBirth(resultSet.getDate(DATE_OF_BIRTH).toLocalDate());
         Role role = Role.builder()
-                .roleId(resultSet.getInt(ROLE_USER_COLUMN))
+                .id(resultSet.getInt(ROLE_USER_COLUMN))
                 .roleName(resultSet.getString(ROLE_NAME_TABLE_ROLE))
                 .build();
         user.setRole(role);

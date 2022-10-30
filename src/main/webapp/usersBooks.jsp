@@ -28,7 +28,7 @@
                 </tr>
                 <c:forEach var="book" items="${bookList}">
                     <tr>
-                        <td>${book.getBookId()}</td>
+                        <td>${book.getId()}</td>
                         <td>${book.getTitle()}</td>
                         <td>${book.getAuthor()}</td>
                         <td>${book.getPages()}</td>

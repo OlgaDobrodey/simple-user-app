@@ -12,12 +12,26 @@
         <property name="hibernate.jdbc.batch_size">100</property>
 <!--        <property name="show_sql">true</property>-->
 <!--        <property name="format_sql">true</property>-->
+         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
         <mapping class="by.dobrodey.user_app.model.User"/>
         <mapping class="by.dobrodey.user_app.model.Book"/>
         <mapping class="by.dobrodey.user_app.model.Role"/>
+
+        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Employee"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Manager"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Programmer"/>        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Manager"/>
+
+        <mapping class="by.dobrodey.user_app.model.mapping.single_table.ProgrammerST"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.single_table.ManagerST"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.single_table.SingleTable"/>
+
+        <mapping class="by.dobrodey.user_app.model.mapping.joined.Joined"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.joined.ProgrammerJ"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.joined.ManagerJ"/>
+
 
     </session-factory>
 </hibernate-configuration>

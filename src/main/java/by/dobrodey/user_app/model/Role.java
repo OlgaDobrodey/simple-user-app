@@ -24,7 +24,7 @@ public class Role {
 
     @Id
     @Column(name = "id")
-    private Integer roleId;
+    private Integer id;
     @Column(name = "role_name")
     private String roleName;
 
@@ -44,7 +44,7 @@ public class Role {
      */
     public static Role getDefaultRole(){
         return Role.builder()
-                .roleId(ID_DEFAULT_ROLE)
+                .id(ID_DEFAULT_ROLE)
                 .roleName( NAME_DEFAULT_ROLE )
                 .build();
     }

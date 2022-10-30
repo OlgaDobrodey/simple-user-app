@@ -29,7 +29,7 @@
         </tr>
         <c:forEach var="book" items="${listBooks}">
             <tr>
-                <td>${book.getBookId()}</td>
+                <td>${book.getId()}</td>
                 <td>${book.getTitle()}</td>
                 <td>${book.getAuthor()}</td>
                 <td>${book.getPages()}</td>
@@ -53,7 +53,7 @@
                     <c:when test="${!book.equals('Book not found')}">
                         <table class="table table-striped table-info">
                             <tr>
-                                <td> ${book.getBookId()}</td>
+                                <td> ${book.getId()}</td>
                                 <td> ${book.getTitle()}</td>
                                 <td> ${book.getAuthor()}</td>
                                 <td> ${book.getPages()}</td>
