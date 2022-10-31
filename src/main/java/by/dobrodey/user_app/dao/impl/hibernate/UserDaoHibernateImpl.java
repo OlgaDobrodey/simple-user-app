@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class UserDaoHibernateImpl implements UserDao {
     private static final String SELECT_ALL_QUERY = "FROM User u";
     private static final String DELETE_ALL_QUERY = "DELETE FROM User u";
-    private static final String DELETE_ALL_USERS_FROM_USERS_BOOK = "DELETE FROM users_book";
 
     private final SessionFactory sessionFactory;
 
