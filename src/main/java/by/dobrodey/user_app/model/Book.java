@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +21,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(schema = "library", name = "book")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Book extends BaseEntity<Integer> {
 
     private String title;

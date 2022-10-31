@@ -36,10 +36,12 @@ public class Main {
     private static void books(BookDao bookDao) throws SQLException {
         System.out.println("FInd All roles: " + bookDao.findAll());
         System.out.println("Find book by id1: " + bookDao.findById(1));
+        System.out.println("DOUBLE: Find book by id1: " + bookDao.findById(1));
         System.out.println("Find book by id20: " + bookDao.findById(20));
-        System.out.println("Find All book by UserId =  "+8+":"+bookDao.findAllBookByUserId(8));
-        System.out.println("Find All book by UserId =  "+100+":"+bookDao.findAllBookByUserId(100));
-        bookDao.findAllBookWhereCountPagesMore(500);
+        System.out.println("Find All book by UserId =  " + 8 + ":" + bookDao.findAllBookByUserId(8));
+//        System.out.println("Find All book by UserId Double =  "+8+":"+bookDao.findAllBookByUserId(8));
+        System.out.println("Find All book by UserId =  " + 100 + ":" + bookDao.findAllBookByUserId(100));
+//        bookDao.findAllBookWhereCountPagesMore(500);
     }
 
     private static void role(RoleDao roleDao) throws SQLException {

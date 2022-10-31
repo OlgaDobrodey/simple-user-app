@@ -66,6 +66,7 @@ public class BookDaoHibernateImpl implements BookDao {
                     .setParameter(USER_ID, userId)
                     .getResultList();
             transaction.commit();
+            System.out.println("return find all");
             return books;
         }
     }

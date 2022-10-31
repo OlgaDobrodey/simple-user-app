@@ -10,11 +10,19 @@
         <property name="connection.password">library</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="hibernate.jdbc.batch_size">100</property>
-<!--        <property name="show_sql">true</property>-->
-<!--        <property name="format_sql">true</property>-->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
 
         <!-- DB schema will be updated if needed -->
-<!--         <property name="hibernate.hbm2ddl.auto">update</property>-->
+        <!--         <property name="hibernate.hbm2ddl.auto">update</property>-->
+        <!--cache-->
+
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
+        </property>
+
+        <!--         enable second level cache and query cache -->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="net.sf.ehcache.configurationResourceName">ehcache.xml</property>
 
         <mapping class="by.dobrodey.user_app.model.User"/>
         <mapping class="by.dobrodey.user_app.model.Book"/>
@@ -22,7 +30,8 @@
 
         <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Employee"/>
         <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Manager"/>
-        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Programmer"/>        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Manager"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Programmer"/>
+        <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Manager"/>
 
         <mapping class="by.dobrodey.user_app.model.mapping.single_table.ProgrammerST"/>
         <mapping class="by.dobrodey.user_app.model.mapping.single_table.ManagerST"/>
