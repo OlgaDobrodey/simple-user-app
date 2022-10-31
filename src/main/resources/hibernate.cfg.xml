@@ -15,6 +15,7 @@
 
         <!-- DB schema will be updated if needed -->
 <!--         <property name="hibernate.hbm2ddl.auto">update</property>-->
+
         <mapping class="by.dobrodey.user_app.model.User"/>
         <mapping class="by.dobrodey.user_app.model.Book"/>
         <mapping class="by.dobrodey.user_app.model.Role"/>

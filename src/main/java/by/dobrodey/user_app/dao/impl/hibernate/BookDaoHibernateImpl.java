@@ -77,21 +77,26 @@ public class BookDaoHibernateImpl implements BookDao {
             Date finishLinked = new Date();
             Transaction transaction = session.beginTransaction();
             int count = count();
-            int i = 0;
             List<Book> books = new LinkedList<>();
+            int i = 0;
             while (i <= count) {
                 Date finishLinked1 = new Date();
-                books.addAll(session.createQuery(SELECT_ALL_BOOKS_BY_PAGES_MORE + pages, Book.class)
-                        .setFirstResult(i).setMaxResults(i + 99999).list());
+
+                List<Book> list = session
+                        .createQuery(SELECT_ALL_BOOKS_BY_PAGES_MORE + pages, Book.class)
+                        .setFirstResult(i).setMaxResults(i + 99999).list();
                 session.clear();
+                list = null;
 
                 i += 100000;
                 System.out.println("==================== " + i + " ===============");
                 System.out.println(new Date().getTime() - finishLinked1.getTime());
             }
+
             transaction.commit();
             Date endLinked = new Date();
-            System.out.println(endLinked.getTime() - finishLinked.getTime());
+            System.out.println("Time get Book " + (endLinked.getTime() - finishLinked.getTime()));
+            System.out.println("Count = " + count);
             return books;
         }
     }
