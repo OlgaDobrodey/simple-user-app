@@ -22,6 +22,7 @@ import java.util.Optional;
  * Class consist methods for work model User
  */
 @AllArgsConstructor
+@Deprecated
 public class UserDaoImpl implements UserDao {
 
     private static final String ID_USER_COLUMN = "id";

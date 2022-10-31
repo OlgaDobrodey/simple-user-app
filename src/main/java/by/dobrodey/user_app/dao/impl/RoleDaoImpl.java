@@ -18,6 +18,7 @@ import java.util.Optional;
  * Class consist methods for model Role
  */
 @AllArgsConstructor
+@Deprecated
 public class RoleDaoImpl implements RoleDao {
 
     private static final String ID_ROLE_COLUMN = "id";
