@@ -4,6 +4,8 @@ import by.dobrodey.user_app.dao.BookDao;
 import by.dobrodey.user_app.dao.RoleDao;
 import by.dobrodey.user_app.dao.UserDao;
 import by.dobrodey.user_app.dao.impl.hibernate.BookDaoHibernateImpl;
+import by.dobrodey.user_app.dao.impl.hibernate.RoleDaoHibernateImpl;
+import by.dobrodey.user_app.dao.impl.hibernate.UserDaoHibernateImpl;
 import by.dobrodey.user_app.data.BaseConnection;
 import by.dobrodey.user_app.model.User;
 import by.dobrodey.user_app.service.FlywayService;
@@ -15,33 +17,31 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         FlywayService flywayService = new FlywayService();
-////        flywayService.clean();
+//        flywayService.clean();
         flywayService.migrate();
 //
-//        System.out.println("=================ABOUT ROLE==================");
-//        RoleDao roleDao = new RoleDaoHibernateImpl(BaseConnection.getInstanceHibernate());
-//        role(roleDao);
+        System.out.println("=================ABOUT ROLE==================");
+        RoleDao roleDao = new RoleDaoHibernateImpl(BaseConnection.getInstanceHibernate());
+        role(roleDao);
 //
 //        System.out.println("==================ABOUT BOOK==============================");
         BookDao bookDao = new BookDaoHibernateImpl(BaseConnection.getInstanceHibernate());
         books(bookDao);
-//        System.out.println("==================ABOUT USER==============================");
-//        UserDao userRepository = new UserDaoHibernateImpl(BaseConnection.getInstanceHibernate());
-//
-//        findUsers(userRepository);
-//        saveUsers(userRepository);
-//        deleteUsers(userRepository);
-//
+        System.out.println("==================ABOUT USER==============================");
+        UserDao userRepository = new UserDaoHibernateImpl(BaseConnection.getInstanceHibernate());
 
+        findUsers(userRepository);
+        saveUsers(userRepository);
+        deleteUsers(userRepository);
     }
 
     private static void books(BookDao bookDao) throws SQLException {
         System.out.println("FInd All roles: " + bookDao.findAll());
         System.out.println("Find book by id1: " + bookDao.findById(1));
         System.out.println("Find book by id20: " + bookDao.findById(20));
-        System.out.println(bookDao.findAllBookByUserId(10));
-        System.out.println(bookDao.findAllBookByUserId(100));
-        bookDao.findAllBookWhereCountPagesMore(100);
+        System.out.println("Find All book by UserId =  "+8+":"+bookDao.findAllBookByUserId(8));
+        System.out.println("Find All book by UserId =  "+100+":"+bookDao.findAllBookByUserId(100));
+//        bookDao.findAllBookWhereCountPagesMore(100);
     }
 
     private static void role(RoleDao roleDao) throws SQLException {

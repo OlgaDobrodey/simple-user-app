@@ -12,10 +12,9 @@
         <property name="hibernate.jdbc.batch_size">100</property>
 <!--        <property name="show_sql">true</property>-->
 <!--        <property name="format_sql">true</property>-->
-         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- DB schema will be updated if needed -->
-        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+<!--         <property name="hibernate.hbm2ddl.auto">update</property>-->
         <mapping class="by.dobrodey.user_app.model.User"/>
         <mapping class="by.dobrodey.user_app.model.Book"/>
         <mapping class="by.dobrodey.user_app.model.Role"/>

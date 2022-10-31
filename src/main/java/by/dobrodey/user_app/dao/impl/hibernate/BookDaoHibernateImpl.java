@@ -87,7 +87,7 @@ public class BookDaoHibernateImpl implements BookDao {
 
                 i += 100000;
                 System.out.println("==================== " + i + " ===============");
-                System.out.println(new Date().getTime()-finishLinked1.getTime());
+                System.out.println(new Date().getTime() - finishLinked1.getTime());
             }
             transaction.commit();
             Date endLinked = new Date();
