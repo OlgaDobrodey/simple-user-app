@@ -21,6 +21,8 @@
 - src/main/resources/ehcache.xml
 - by/dobrodey/user_app/model/Book.java
 
+***Cascade***
+- src/main/java/by/dobrodey/user_app/model/User.java(field Address (OneToOne))
 
 
 
