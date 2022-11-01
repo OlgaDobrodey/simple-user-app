@@ -73,7 +73,6 @@ public class BookDaoHibernateImpl implements BookDao {
 
     @Override
     public List<Book> findAllBookWhereCountPagesMore(Integer pages) {
-
         try (Session session = sessionFactory.openSession()) {
             Date finishLinked = new Date();
             Transaction transaction = session.beginTransaction();
@@ -81,23 +80,19 @@ public class BookDaoHibernateImpl implements BookDao {
             List<Book> books = new LinkedList<>();
             int i = 0;
             while (i <= count) {
-                Date finishLinked1 = new Date();
-
                 List<Book> list = session
                         .createQuery(SELECT_ALL_BOOKS_BY_PAGES_MORE + pages, Book.class)
                         .setFirstResult(i).setMaxResults(i + 99999).list();
+
                 session.clear();
                 list = null;
 
                 i += 100000;
                 System.out.println("==================== " + i + " ===============");
-                System.out.println(new Date().getTime() - finishLinked1.getTime());
             }
-
             transaction.commit();
             Date endLinked = new Date();
             System.out.println("Time get Book " + (endLinked.getTime() - finishLinked.getTime()));
-            System.out.println("Count = " + count);
             return books;
         }
     }

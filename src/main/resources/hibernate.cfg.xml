@@ -27,6 +27,7 @@
         <mapping class="by.dobrodey.user_app.model.User"/>
         <mapping class="by.dobrodey.user_app.model.Book"/>
         <mapping class="by.dobrodey.user_app.model.Role"/>
+        <mapping class="by.dobrodey.user_app.model.Address"/>
 
         <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Employee"/>
         <mapping class="by.dobrodey.user_app.model.mapping.table_pre_class.Manager"/>

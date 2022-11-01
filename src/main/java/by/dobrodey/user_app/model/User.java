@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
@@ -44,8 +46,12 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
     private String email;
-    @Column(name="date_of_birth")
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id")
+    private Address address;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
