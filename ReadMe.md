@@ -1,7 +1,7 @@
 **Simple user application**
 **Library**
 ***Folder Inheritance Implementations:***
-- src/main/java/by/dobrodey/user_app/model/mapping
+- src/main/java/by/dobrodey/user_app/model/mapping.
 
 ***Polymorphic queries to derived classes:***
 - src/main/java/by/dobrodey/user_app/model/mapping/joined/RunnerJoined.java
